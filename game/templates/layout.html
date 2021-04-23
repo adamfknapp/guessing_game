@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}guessing game{% endblock %}</title>
+        <link href="{% static 'game/styles.css' %}" rel="stylesheet">
+ 
+      
+        {% block script %}
+        {% endblock %}
+    
+    </head>
+    <body>
+        
+        <div class="body">
+            {% block body %}
+            {% endblock %}
+        </div>
+
+    </body>
+</html>
