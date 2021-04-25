@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="static/styles.css">
-        <title>Example</title>
-    </head>
-    <body>
-        <h1>i like batman</h1>
-    </body>
-</html>
+{% extends "layout.html" %}
+{% load static %}
+
+{% block body %}
+<h1 class="text-purple-700">I like Batman !!</h1>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'game/index.js' %}"></script>
+{% endblock %}
