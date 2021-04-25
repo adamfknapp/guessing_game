@@ -1,9 +1,11 @@
 {% load static %}
+{% load tailwind_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>{% block title %}guessing game{% endblock %}</title>
+        {% tailwind_css %}
         <link href="{% static 'game/styles.css' %}" rel="stylesheet">
  
       
@@ -14,6 +16,7 @@
     <body>
         
         <div class="body">
+            <h1 class="text-4xl ...">This is the layout file</h1>
             {% block body %}
             {% endblock %}
         </div>

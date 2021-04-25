@@ -1,10 +1,12 @@
+{% load tailwind_tags %}
 <!DOCTYPE html>
+   
 <html>
     <head>
-        <link rel="stylesheet" href="static/styles.css">
+        {% tailwind_css %}
         <title>Example</title>
     </head>
     <body>
-        <h1>i like batman</h1>
+        <h1 class="text-4xl ...">i like batman!!</h1>
     </body>
 </html>
