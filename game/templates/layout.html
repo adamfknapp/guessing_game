@@ -4,8 +4,14 @@
 <html lang="en">
     <head>
         <title>{% block title %}guessing game{% endblock %}</title>
+        <!-- CSS -->
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-        <link href="{% static 'game/styles.css' %}" rel="stylesheet">
+        <link href="{% static 'styles.css' %}" rel="stylesheet">
+
+        <!-- REACT -->
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
  
       
         {% block script %}

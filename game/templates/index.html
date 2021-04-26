@@ -2,9 +2,14 @@
 {% load static %}
 
 {% block body %}
-<h1 class="text-purple-700">I like Batman !!</h1>
+
+<div id="app" />
+
+
 {% endblock %}
 
+
+
 {% block script %}
-<script src="{% static 'game/index.js' %}"></script>
+<script type="text/babel" src="{% static 'index.js' %}"></script>
 {% endblock %}
