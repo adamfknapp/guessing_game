@@ -1,57 +1,65 @@
+class Mybutton extends React.Component {
+  render() {
+    return (
+      // Based on https://tailwindcomponents.com/component/outline-button-with-hover-offset
+      <button class="my-3 mx-10 py-2 px-4 bg-white text-purple-800 font-semibold border border-purple-800 rounded hover:bg-purple-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"> {this.props.text}</button>
+    );
+  }
+}
+
+class Score extends React.Component {
+  render() {
+    return (
+    <p class="text-xl font-medium text-white-500"> Current score: {this.props.score} </p>
+    );
+  }
+}
+
 class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       question: "What is Darla?",
-      Answer: "Dog",
       choice1: "Cat",
       choice2: "Monkey",
       choice3: "Horse",
-      score: 0
+      choice4: "Dog",
+      curscore: 0
     };
   }
-  
+
   render() { 
     
     return (
-      <div class="bg-gradient-to-b from-blue-400 to-blue-900">
-        <div class="flex h-screen justify-center items-center">
-          
-            
-          <h2 class="text-gray-50 text-8xl font-semibold"> {this.state.question} 
-          </h2>
-        
-        <div>
-        <button class="text-xl font-medium text-white-500">{this.state.Answer}</button>
-        <button class="text-xl font-medium text-white-500">{this.state.choice1}</button>
-        <button class="text-xl font-medium text-white-500">{this.state.choice2}</button>
-        <button class="text-xl font-medium text-white-500">{this.state.choice3}</button>
+    <div class="bg-gradient-to-b from-blue-400 to-blue-900">
+      <div class="flex flex-col h-screen justify-center items-center">
 
+        <div>
+            <h2 class=" text-gray-50 text-8xl font-semibold"> {this.state.question} </h2>
         </div>
-        
-            
+
+        <div>
+          <div>
+              <Mybutton text={this.state.choice1}/>
+              <Mybutton text={this.state.choice2} />
+          </div>
+
+          <div>
+              <Mybutton text={this.state.choice3}/>
+              <Mybutton text={this.state.choice4} />
+          </div>
+
+          <div>
+            <Score score={this.state.curscore}/>
+          </div>
           
         </div>
       </div>
+    </div>
     );
-
-        // <div className="container mx-auto w-1/2"> 
-
-        //   <div>
-        //     <div className="bg-indigo-50 p-10 w-1/2">
-        //       <h1>{this.state.question}</h1>
-        //     </div>
-        //   </div>
-
-        //   <button>{this.state.Answer}</button>
-        //   <button>{this.state.choice1}</button>
-        //   <button>{this.state.choice2}</button>
-        //   <button>{this.state.choice3}</button>
-        //   <div> Score: {this.state.score}</div>  
-        // </div>  
-      //);
     }
 
+    
     inputKeyPress =(event)=>{
       if(event.key === 'Enter'){
         const answer = parseInt(this.state.response);
