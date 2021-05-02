@@ -1,3 +1,5 @@
+
+
 class Mybutton extends React.Component {
   render() {
     return (
@@ -19,23 +21,35 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      question: "What is Darla?",
-      choice1: "Cat",
-      choice2: "Monkey",
-      choice3: "Horse",
-      choice4: "Dog",
-      curscore: 0
+      question: null,
+      choice1: null,
+      choice2: null,
+      choice3: null,
+      choice4: null,
+      curscore: null
     };
   }
+  componentDidMount() {
+    // Simple GET request using fetch
+    fetch(`/questions`)
+        .then(response => response.json())
+        .then((data)=>{
+          this.setState({
+              question: data[0]['question'],
+              choice1: data[0]['choice1'],
+              choice2: data[0]['choice2'],
+              choice3: data[0]['choice3'],
+              choice4: data[0]['choice4'],
+            })
+      });
 
   render() { 
-    
     return (
     <div class="bg-gradient-to-b from-blue-400 to-blue-900">
       <div class="flex flex-col h-screen justify-center items-center">
 
         <div>
-            <h2 class=" text-gray-50 text-8xl font-semibold"> {this.state.question} </h2>
+            <h2 class=" text-gray-50 text-6xl font-semibold text-center">  {this.state.question} </h2>
         </div>
 
         <div>
@@ -60,30 +74,30 @@ class App extends React.Component {
     }
 
     
-    inputKeyPress =(event)=>{
-      if(event.key === 'Enter'){
-        const answer = parseInt(this.state.response);
-        if (answer === this.state.num1 + this.state.num2){
-            this.setState(state => ({
-              score: state.score +1,
-              response: "",
-              num1: Math.ceil(Math.random() * 10),
-              num2: Math.ceil(Math.random() * 10)
-            }));
-        }else{
-          this.setState(state => ({
-            score: state.score -1,
-            response: "",
-          }));
-        }
-      }
-    }
+    // inputKeyPress =(event)=>{
+    //   if(event.key === 'Enter'){
+    //     const answer = parseInt(this.state.response);
+    //     if (answer === this.state.num1 + this.state.num2){
+    //         this.setState(state => ({
+    //           score: state.score +1,
+    //           response: "",
+    //           num1: Math.ceil(Math.random() * 10),
+    //           num2: Math.ceil(Math.random() * 10)
+    //         }));
+    //     }else{
+    //       this.setState(state => ({
+    //         score: state.score -1,
+    //         response: "",
+    //       }));
+    //     }
+    //   }
+    // }
 
-    updateResponse = (event) => {
-      this.setState({
-        response: event.target.value
-      });
-    }
+    // updateResponse = (event) => {
+    //   this.setState({
+    //     response: event.target.value
+    //   });
+    // }
   
 }
 

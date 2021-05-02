@@ -18,5 +18,8 @@ from django.urls import path
 from game import views
 
 urlpatterns = [
-    path('', views.index, name='index')
+    path('', views.Index, name='index'),
+
+    #API Route
+    path("questions", views.Questions, name="questions"),
 ]
