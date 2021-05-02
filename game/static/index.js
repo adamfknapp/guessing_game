@@ -42,6 +42,7 @@ class App extends React.Component {
               choice4: data[0]['choice4'],
             })
       });
+}
 
   render() { 
     return (
