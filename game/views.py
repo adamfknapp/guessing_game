@@ -16,7 +16,7 @@ def Index(request):
 def Questions(request):
 
     if request.method == "GET":
-        cat_id = 11, 
+        cat_id = None, 
         num_quest = 1, 
         difficulty = 'easy', 
         quest_type = 'multiple' 

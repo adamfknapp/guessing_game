@@ -8,7 +8,7 @@ class App extends React.Component {
       choice1: "choice 1",
       choice1: "choice 1",
       choice1: "choice 1",
-      question: "what is darla?",
+      question: ""
       response: "",
       score: 0
     };

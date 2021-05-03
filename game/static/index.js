@@ -1,13 +1,46 @@
 
-
 class Mybutton extends React.Component {
+  
+  constructor (props) {
+    super(props);
+    this.state = {
+      score: 0
+      };
+    this.handClick = this.handleClick.bind(this);
+  }
+  
   render() {
+
+
     return (
-      // Based on https://tailwindcomponents.com/component/outline-button-with-hover-offset
-      <button class="my-3 mx-10 py-2 px-4 bg-white text-purple-800 font-semibold border border-purple-800 rounded hover:bg-purple-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"> {this.props.text}</button>
+      // CSS based on https://tailwindcomponents.com/component/outline-button-with-hover-offset
+      <button  onClick={ ()  => {this.handleClick()}}  class="my-3 mx-10 py-2 px-4 bg-white text-purple-800 font-semibold border border-purple-800 rounded hover:bg-purple-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"> {this.props.text} </button>
     );
   }
+  // TODO-    Need to pass state up. Currently, each button has its own state.
+  handleClick(){
+    console.log(`The current score is: ${this.state.score}`);
+    if (this.props.text === this.props.correct_answer){
+      this.setState(state => ({
+        score: state.score + 1 
+      }));
+
+ 
+    } else {
+      this.setState(state => ({
+        score: state.score - 1 
+      }));
+    };
+    console.log(`The New score is: ${this.state.score}`);
+
+  }
+// TO DO
+// - prompt the user if they are correct
+// - update the score
+// - update the database with the users score
+
 }
+
 
 class Score extends React.Component {
   render() {
@@ -26,46 +59,66 @@ class App extends React.Component {
       choice2: null,
       choice3: null,
       choice4: null,
-      curscore: null
-    };
+      correct_answer: null,
+      category: null,
+      difficulty: null,
+      score: null
+      };
   }
+
+
+
+
+
   componentDidMount() {
     // Simple GET request using fetch
     fetch(`/questions`)
         .then(response => response.json())
         .then((data)=>{
+          console.log(data)
           this.setState({
               question: data[0]['question'],
+              correct_answer: data[0]['correct_answer'],
               choice1: data[0]['choice1'],
               choice2: data[0]['choice2'],
               choice3: data[0]['choice3'],
               choice4: data[0]['choice4'],
             })
       });
-}
+    }
 
-  render() { 
+    
+  
+  render() {
+    
+    const choice1 = this.state.choice1;
+    const choice2 = this.state.choice2;
+    const choice3 = this.state.choice3;
+    const choice4 = this.state.choice4;
+    const correct_answer = this.state.correct_answer;
+
     return (
+  
     <div class="bg-gradient-to-b from-blue-400 to-blue-900">
       <div class="flex flex-col h-screen justify-center items-center">
 
         <div>
-            <h2 class=" text-gray-50 text-6xl font-semibold text-center">  {this.state.question} </h2>
+            <h2 class=" text-gray-50 text-6xl font-semibold text-center p-20">  {this.state.question} </h2>
         </div>
 
         <div>
           <div>
-              <Mybutton text={this.state.choice1}/>
-              <Mybutton text={this.state.choice2} />
+              <Mybutton text={choice1} correct_answer={correct_answer} />
+              <Mybutton text={choice2} correct_answer={correct_answer} />
           </div>
 
           <div>
-              <Mybutton text={this.state.choice3}/>
-              <Mybutton text={this.state.choice4} />
+              <Mybutton text={choice3} correct_answer={correct_answer} />
+              <Mybutton text={choice4} correct_answer={correct_answer} />
           </div>
 
           <div>
-            <Score score={this.state.curscore}/>
+            <Score score={this.state.score}/>
           </div>
           
         </div>
@@ -74,32 +127,9 @@ class App extends React.Component {
     );
     }
 
-    
-    // inputKeyPress =(event)=>{
-    //   if(event.key === 'Enter'){
-    //     const answer = parseInt(this.state.response);
-    //     if (answer === this.state.num1 + this.state.num2){
-    //         this.setState(state => ({
-    //           score: state.score +1,
-    //           response: "",
-    //           num1: Math.ceil(Math.random() * 10),
-    //           num2: Math.ceil(Math.random() * 10)
-    //         }));
-    //     }else{
-    //       this.setState(state => ({
-    //         score: state.score -1,
-    //         response: "",
-    //       }));
-    //     }
-    //   }
-    // }
 
-    // updateResponse = (event) => {
-    //   this.setState({
-    //     response: event.target.value
-    //   });
-    // }
-  
+
+    
 }
 
 
