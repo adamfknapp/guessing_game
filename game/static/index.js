@@ -1,38 +1,27 @@
 
 class Mybutton extends React.Component {
   
-  constructor (props) {
-    super(props);
-    this.state = {
-      score: 0
-      };
-    this.handClick = this.handleClick.bind(this);
-  }
   
   render() {
-
-
+    const increment = this.props.increment
+    const decrement = this.props.decrement
+    
     return (
+      // onClick={ ()  => {this.handleClick()}}
+      // onClick= {this.props.increment}   This works !!!!!
       // CSS based on https://tailwindcomponents.com/component/outline-button-with-hover-offset
-      <button  onClick={ ()  => {this.handleClick()}}  class="my-3 mx-10 py-2 px-4 bg-white text-purple-800 font-semibold border border-purple-800 rounded hover:bg-purple-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"> {this.props.text} </button>
+      <button onClick={ ()  => {this.handleClick()}} class="my-3 mx-10 py-2 px-4 bg-white text-purple-800 font-semibold border border-purple-800 rounded hover:bg-purple-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"> {this.props.text} </button>
     );
   }
   // TODO-    Need to pass state up. Currently, each button has its own state.
   handleClick(){
-    console.log(`The current score is: ${this.state.score}`);
     if (this.props.text === this.props.correct_answer){
-      this.setState(state => ({
-        score: state.score + 1 
-      }));
-
- 
+      console.log(`correct ${this.props.text}`)
+      this.props.increment()
     } else {
-      this.setState(state => ({
-        score: state.score - 1 
-      }));
+      console.log('incorrect')
+      this.props.decrement()
     };
-    console.log(`The New score is: ${this.state.score}`);
-
   }
 // TO DO
 // - prompt the user if they are correct
@@ -62,11 +51,23 @@ class App extends React.Component {
       correct_answer: null,
       category: null,
       difficulty: null,
-      score: null
+      score: 0
       };
   }
 
+  increment = () => {
+    console.log('+')
+    this.setState({
+      score: this.state.score + 1
+    });
+  };
 
+  decrement = () => {
+    console.log('-')
+    this.setState({
+      score: this.state.score - 1
+    });
+  };
 
 
 
@@ -95,7 +96,10 @@ class App extends React.Component {
     const choice2 = this.state.choice2;
     const choice3 = this.state.choice3;
     const choice4 = this.state.choice4;
+    const score = this.state.score;
     const correct_answer = this.state.correct_answer;
+    // const decrement = this.decrement
+    // const increment = this.increment
 
     return (
   
@@ -108,13 +112,41 @@ class App extends React.Component {
 
         <div>
           <div>
-              <Mybutton text={choice1} correct_answer={correct_answer} />
-              <Mybutton text={choice2} correct_answer={correct_answer} />
+              <Mybutton 
+                text={choice1} 
+                score ={score}
+                correct_answer={correct_answer} 
+                decrement = {this.decrement}
+                increment = {this.increment}
+                />
+   
+              <Mybutton 
+                text={choice2} 
+                score ={score}
+                correct_answer={correct_answer} 
+                decrement = {this.decrement}
+                increment = {this.increment}
+                />
+
           </div>
 
           <div>
-              <Mybutton text={choice3} correct_answer={correct_answer} />
-              <Mybutton text={choice4} correct_answer={correct_answer} />
+              <Mybutton 
+                text={choice3} 
+                score ={score}
+                correct_answer={correct_answer} 
+                decrement = {this.decrement}
+                increment = {this.increment}
+                />
+
+              <Mybutton 
+                text={choice4}
+                score ={score} 
+                correct_answer={correct_answer} 
+                decrement = {this.decrement}
+                increment = {this.increment}
+                />
+
           </div>
 
           <div>
