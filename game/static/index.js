@@ -1,40 +1,28 @@
-
+// TODO Move to new file
 class Mybutton extends React.Component {
   
-  
   render() {
-    const increment = this.props.increment
-    const decrement = this.props.decrement
     
     return (
-      // onClick={ ()  => {this.handleClick()}}
-      // onClick= {this.props.increment}   This works !!!!!
-      // CSS based on https://tailwindcomponents.com/component/outline-button-with-hover-offset
       <button onClick={ ()  => {this.handleClick()}} class="my-3 mx-10 py-2 px-4 bg-white text-purple-800 font-semibold border border-purple-800 rounded hover:bg-purple-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"> {this.props.text} </button>
     );
   }
-  // TODO-    Need to pass state up. Currently, each button has its own state.
+
   handleClick(){
     if (this.props.text === this.props.correct_answer){
-      console.log(`correct ${this.props.text}`)
       this.props.increment()
     } else {
-      console.log('incorrect')
       this.props.decrement()
     };
+    // Get new question
   }
-// TO DO
-// - prompt the user if they are correct
-// - update the score
-// - update the database with the users score
-
 }
 
-
+// TODO Move to new file
 class Score extends React.Component {
   render() {
     return (
-    <p class="text-xl font-medium text-white-500"> Current score: {this.props.score} </p>
+    <p class="text-2xl font-medium text-white"> Score: {this.props.score} </p>
     );
   }
 }
@@ -56,19 +44,16 @@ class App extends React.Component {
   }
 
   increment = () => {
-    console.log('+')
     this.setState({
       score: this.state.score + 1
     });
   };
 
   decrement = () => {
-    console.log('-')
     this.setState({
       score: this.state.score - 1
     });
   };
-
 
 
   componentDidMount() {
