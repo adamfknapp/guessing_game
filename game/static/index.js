@@ -14,7 +14,7 @@ class Mybutton extends React.Component {
     } else {
       this.props.decrement()
     };
-    // Get new question
+    this.props.get_question()
   }
 }
 
@@ -22,7 +22,11 @@ class Mybutton extends React.Component {
 class Score extends React.Component {
   render() {
     return (
-    <p class="text-2xl font-medium text-white"> Score: {this.props.score} </p>
+      <div>
+      <p class="text-2xl font-medium text-white"> Score: {this.props.score} </p>
+      <p class="text-2xl font-medium text-white"> {this.props.quesitons_answered} of {this.props.max_questions}</p>
+      </div>
+    
     );
   }
 }
@@ -31,6 +35,8 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      quesitons_answered: 0,
+      max_questions: 2,
       question: null,
       choice1: null,
       choice2: null,
@@ -43,25 +49,27 @@ class App extends React.Component {
       };
   }
 
+
   increment = () => {
     this.setState({
-      score: this.state.score + 1
+      score: this.state.score + 1,
+      quesitons_answered: this.state.quesitons_answered + 1
     });
   };
+
 
   decrement = () => {
     this.setState({
-      score: this.state.score - 1
+      score: this.state.score - 1,
+      quesitons_answered: this.state.quesitons_answered + 1
     });
   };
 
 
-  componentDidMount() {
-    // Simple GET request using fetch
+  get_question = () => {
     fetch(`/questions`)
         .then(response => response.json())
         .then((data)=>{
-          console.log(data)
           this.setState({
               question: data[0]['question'],
               correct_answer: data[0]['correct_answer'],
@@ -69,23 +77,39 @@ class App extends React.Component {
               choice2: data[0]['choice2'],
               choice3: data[0]['choice3'],
               choice4: data[0]['choice4'],
+
             })
       });
+  }
+
+
+  componentDidMount() {
+    this.get_question()
     }
 
     
   
   render() {
-    
-    const choice1 = this.state.choice1;
-    const choice2 = this.state.choice2;
-    const choice3 = this.state.choice3;
-    const choice4 = this.state.choice4;
-    const score = this.state.score;
-    const correct_answer = this.state.correct_answer;
-    // const decrement = this.decrement
-    // const increment = this.increment
 
+    // Check if max questions reached
+    if (this.state.quesitons_answered === this.state.max_questions){
+
+      const positive_score_class = "bg-gradient-to-b from-green-400 to-green-900"
+      const negative_score_class = "bg-gradient-to-b from-red-400 to-red-900"
+      const score_is_negative = this.state.score < 0
+
+      return (
+        <div class={`${ score_is_negative ? negative_score_class : positive_score_class}`}>
+          <div class="flex flex-col h-screen justify-center items-center">
+            <h2 class=" text-gray-50 text-6xl font-semibold text-center p-20">  
+              Final score: {this.state.score} 
+            </h2>
+          </div>
+        </div>
+      );
+    }
+
+    // Display question
     return (
   
     <div class="bg-gradient-to-b from-blue-400 to-blue-900">
@@ -98,44 +122,48 @@ class App extends React.Component {
         <div>
           <div>
               <Mybutton 
-                text={choice1} 
-                score ={score}
-                correct_answer={correct_answer} 
+                text={this.state.choice1} 
+                correct_answer={this.state.correct_answer} 
                 decrement = {this.decrement}
                 increment = {this.increment}
+                get_question ={this.get_question}
                 />
    
               <Mybutton 
-                text={choice2} 
-                score ={score}
-                correct_answer={correct_answer} 
+                text={this.state.choice2} 
+                correct_answer={this.state.correct_answer} 
                 decrement = {this.decrement}
                 increment = {this.increment}
+                get_question ={this.get_question}
                 />
 
           </div>
 
           <div>
               <Mybutton 
-                text={choice3} 
-                score ={score}
-                correct_answer={correct_answer} 
+                text={this.state.choice3} 
+                correct_answer={this.state.correct_answer} 
                 decrement = {this.decrement}
                 increment = {this.increment}
+                get_question ={this.get_question}
                 />
 
               <Mybutton 
-                text={choice4}
-                score ={score} 
-                correct_answer={correct_answer} 
+                text={this.state.choice4}
+                correct_answer={this.state.correct_answer} 
                 decrement = {this.decrement}
                 increment = {this.increment}
+                get_question ={this.get_question}
                 />
 
           </div>
 
           <div>
-            <Score score={this.state.score}/>
+            <Score 
+                score={this.state.score}
+                quesitons_answered = {this.state.quesitons_answered}
+                max_questions = {this.state.max_questions}
+                />
           </div>
           
         </div>
