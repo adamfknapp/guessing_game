@@ -1,3 +1,4 @@
+
 // TODO Move to new file
 class Mybutton extends React.Component {
   
@@ -81,7 +82,6 @@ class App extends React.Component {
             })
       });
   }
-
 
   componentDidMount() {
     this.get_question()
