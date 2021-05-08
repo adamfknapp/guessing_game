@@ -1,11 +1,13 @@
 from django.shortcuts import HttpResponse, HttpResponseRedirect, render
 from django.http import HttpResponse
 from django.http.response import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from . import services
+from game.models import Game
 
 from random import shuffle
-
+import json
 import pybase64
 #from services import categories, question_count_by_category, get_questions
 
@@ -13,12 +15,13 @@ import pybase64
 def Index(request):
     return render(request, "index.html")
 
+@csrf_exempt
 def Questions(request):
 
     if request.method == "GET":
         cat_id = None, 
         num_quest = 1, 
-        difficulty = 'easy', 
+        difficulty = None, 
         quest_type = 'multiple' 
         questions_raw = services.get_questions(cat_id, num_quest, difficulty, quest_type)
 
@@ -49,4 +52,15 @@ def Questions(request):
 
             return JsonResponse(questions_cln, safe=False)
     
-    # TODO: POST request should update a score. 
+
+    elif request.method == "POST":
+        data = json.loads(request.body)
+        game = Game(score=data["score"], max_questions=data["max_questions"])
+        game.save()
+        return HttpResponse(status=204)
+
+    # Email must be via GET or PUT
+    else:
+        return JsonResponse({
+            "error": "GET or PUT request required."
+        }, status=400)
