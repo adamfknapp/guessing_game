@@ -3,8 +3,13 @@
 class Mybutton extends React.Component {
 
   render() {
-    const button_cls = "my-3 mx-10 py-2 px-4 bg-white text-purple-800 font-semibold border border-purple-800 rounded hover:bg-purple-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
-    return (
+
+    const button_cls = "my-3 mx-10 py-2 px-4 bg-white text-purple-800 "
+                    + " font-semibold border border-purple-800 rounded hover:bg-purple-600 "
+                    + " hover:text-white hover:border-transparent transition ease-in duration-200"
+                    + " transform hover:-translate-y-1 active:translate-y-0"
+
+     return (
       <button onClick={ ()  => {this.handleClick()}} class={`${button_cls}`} > {this.props.text} </button>
     );
   }
@@ -26,8 +31,12 @@ class Score extends React.Component {
   render() {
     return (
       <div>
-      <p class="text-2xl font-medium text-white"> Score: {this.props.score} </p>
-      <p class="text-2xl font-medium text-white"> {this.props.quesitons_answered} of {this.props.max_questions}</p>
+      <p class="text-2xl font-medium text-white"> 
+        Score: {this.props.score} 
+      </p>
+      <p class="text-2xl font-medium text-white"> 
+        {this.props.quesitons_answered} of {this.props.max_questions}
+      </p>
       </div>
     
     );
@@ -81,6 +90,13 @@ class App extends React.Component {
       });
   }
 
+  handlePlayAgain = () => {
+    this.setState({
+      quesitons_answered: 0,
+      score: 0
+    });
+  }
+
   get_question = () => {
     fetch(`/questions`)
         .then(response => response.json())
@@ -120,7 +136,10 @@ class App extends React.Component {
       const score_is_bel_avg = this.state.score < avg_corr_ans
       
       const avg_corr_ans_1 = avg_corr_ans === 1
-      const button_cls = "my-3 mx-10 py-2 px-4 bg-white text-purple-800 font-semibold border border-purple-800 rounded hover:bg-purple-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
+      const button_cls = "my-3 mx-10 py-2 px-4 bg-white text-purple-800 "
+                        + " font-semibold border border-purple-800 rounded hover:bg-purple-600 "
+                        + " hover:text-white hover:border-transparent transition ease-in duration-200"
+                        + " transform hover:-translate-y-1 active:translate-y-0"
    
       return (
         <div class={`${ score_is_bel_avg ? negative_score_class : positive_score_class}`}>
@@ -138,7 +157,9 @@ class App extends React.Component {
               { avg_corr_ans_1 ? ' question was ': ' questions were ' } answered correctly.
             </h5>
             
-            <button class={`${button_cls}`}> Play Again! </button>
+            <button onClick={ ()  => {this.handlePlayAgain()}} class={`${button_cls}`}> 
+              Play Again!
+            </button>
 
 
           </div>
