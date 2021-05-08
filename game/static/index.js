@@ -15,9 +15,11 @@ class Mybutton extends React.Component {
     } else {
       this.props.decrement()
     };
+    
     this.props.get_question()
   }
 }
+
 
 // TODO Move to new file
 class Score extends React.Component {
@@ -37,7 +39,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       quesitons_answered: 0,
-      max_questions: 2,
+      max_questions: 3,
       question: null,
       choice1: null,
       choice2: null,
@@ -67,6 +69,17 @@ class App extends React.Component {
   };
 
 
+  handle_game_over = () => {
+    fetch('/questions', {
+       method: 'POST',
+       headers: {'Content-Type':'application/json'},
+       body: JSON.stringify({
+        "score": this.state.score,
+        "max_questions": this.state.max_questions
+       })
+      });
+  }
+
   get_question = () => {
     fetch(`/questions`)
         .then(response => response.json())
@@ -83,6 +96,7 @@ class App extends React.Component {
       });
   }
 
+
   componentDidMount() {
     this.get_question()
     }
@@ -93,6 +107,9 @@ class App extends React.Component {
 
     // Check if max questions reached
     if (this.state.quesitons_answered === this.state.max_questions){
+      
+      // Log the outcome of the game
+      this.handle_game_over() 
 
       const positive_score_class = "bg-gradient-to-b from-green-400 to-green-900"
       const negative_score_class = "bg-gradient-to-b from-red-400 to-red-900"
@@ -171,10 +188,7 @@ class App extends React.Component {
     </div>
     );
     }
-
-
-
-    
+   
 }
 
 
