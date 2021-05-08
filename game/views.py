@@ -54,9 +54,13 @@ def Questions(request):
                         Sum('score')))['score__sum']
                 total_quest = Game.objects.aggregate(
                         Sum('max_questions'))['max_questions__sum']
+
                 avg_score = round((total_score/total_quest)*100, 1) \
                             if total_quest > 0 else 0
+                questions_cln[0]['avg_score'] = avg_score
+
                 num_games = Game.objects.count()
+                questions_cln[0]['num_games'] = num_games
 
             return JsonResponse(questions_cln, safe=False)
     
