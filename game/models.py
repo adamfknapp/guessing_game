@@ -6,4 +6,5 @@ class Game(models.Model):
     max_questions = models.IntegerField()
 
     def __str__(self):
-        return f"game_id: {self.game_id} | score: {self.score} | max_questionst: {self.max_questions}"
+        return f"game_id: {self.game_id} | score: {self.score} \
+            | max_questionst: {self.max_questions}"

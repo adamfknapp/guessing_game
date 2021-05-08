@@ -63,7 +63,6 @@ class App extends React.Component {
 
   decrement = () => {
     this.setState({
-      score: this.state.score - 1,
       quesitons_answered: this.state.quesitons_answered + 1
     });
   };
@@ -113,10 +112,10 @@ class App extends React.Component {
 
       const positive_score_class = "bg-gradient-to-b from-green-400 to-green-900"
       const negative_score_class = "bg-gradient-to-b from-red-400 to-red-900"
-      const score_is_negative = this.state.score < 0
+      const score_is_zero = this.state.score === 0
 
       return (
-        <div class={`${ score_is_negative ? negative_score_class : positive_score_class}`}>
+        <div class={`${ score_is_zero ? negative_score_class : positive_score_class}`}>
           <div class="flex flex-col h-screen justify-center items-center">
             <h2 class=" text-gray-50 text-6xl font-semibold text-center p-20">  
               Final score: {this.state.score} 

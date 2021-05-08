@@ -5,11 +5,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 from . import services
 from game.models import Game
+from django.db.models import Sum
 
 from random import shuffle
 import json
 import pybase64
-#from services import categories, question_count_by_category, get_questions
 
 
 def Index(request):
@@ -35,7 +35,6 @@ def Questions(request):
                 all_answers.append(record['correct_answer'])
                 
                 # Rearrange potential answers in random order
-                # TODO ensure that order is truely random
                 all_answers = list(set(all_answers))      
                 record ['choice1'] = all_answers[0]
                 record ['choice2'] = all_answers[1]
@@ -47,8 +46,17 @@ def Questions(request):
                 record_cln = {k: pybase64.b64decode(v, validate=True).decode("utf-8") 
                                 for k, v in record.items()}
 
-                #appened to a master list
+                # appened to a master list
                 questions_cln.append(record_cln)
+                
+                # append historical data to the dataset
+                total_score = (Game.objects.aggregate(
+                        Sum('score')))['score__sum']
+                total_quest = Game.objects.aggregate(
+                        Sum('max_questions'))['max_questions__sum']
+                avg_score = round((total_score/total_quest)*100, 1) \
+                            if total_quest > 0 else 0
+                num_games = Game.objects.count()
 
             return JsonResponse(questions_cln, safe=False)
     
