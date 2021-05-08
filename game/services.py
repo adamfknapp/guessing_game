@@ -8,6 +8,7 @@ Based on stack overflow question 30259452
 
 # TODO Handle Encoding hear and return clean text
 
+
 def categories():
     url = 'https://opentdb.com/api_category.php'
     r = requests.get(url)
