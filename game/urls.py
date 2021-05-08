@@ -20,6 +20,6 @@ from game import views
 urlpatterns = [
     path('', views.Index, name='index'),
 
-    #API Route
+    # API Route
     path("questions", views.Questions, name="questions"),
 ]
