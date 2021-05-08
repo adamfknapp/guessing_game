@@ -48,6 +48,8 @@ class App extends React.Component {
       correct_answer: null,
       category: null,
       difficulty: null,
+      avg_score: null,
+      num_games: null,
       score: 0
       };
   }
@@ -90,7 +92,8 @@ class App extends React.Component {
               choice2: data[0]['choice2'],
               choice3: data[0]['choice3'],
               choice4: data[0]['choice4'],
-
+              avg_score: data[0]['avg_score'],
+              num_games: data[0]['num_games']
             })
       });
   }
@@ -112,15 +115,30 @@ class App extends React.Component {
 
       const positive_score_class = "bg-gradient-to-b from-green-400 to-green-900"
       const negative_score_class = "bg-gradient-to-b from-red-400 to-red-900"
-      const score_is_zero = this.state.score === 0
+      const avg_corr_ans = Math.round( this.state.avg_score * this.state.max_questions )
+
+      const score_is_bel_avg = this.state.score < avg_corr_ans
+      
+      const avg_corr_ans_1 = avg_corr_ans === 1
 
       return (
-        <div class={`${ score_is_zero ? negative_score_class : positive_score_class}`}>
+        <div class={`${ score_is_bel_avg ? negative_score_class : positive_score_class}`}>
           <div class="flex flex-col h-screen justify-center items-center">
             <h2 class=" text-gray-50 text-6xl font-semibold text-center p-20">  
-              Final score: {this.state.score} 
+              Final score: {this.state.score}
             </h2>
+
+            <h4 class=" text-gray-50 text-2xl font-semibold text-center p-20">
+              You scored {score_is_bel_avg ? ' below ' : ' on or above '} average
+            </h4>
+
+            <h5 class=" text-gray-50 text-xl font-semibold text-center p-20">
+              Out of {this.state.num_games} games played, on average {avg_corr_ans} 
+              { avg_corr_ans_1 ? ' question was ': ' questions were ' } answered correctly.
+            </h5>
+
           </div>
+
         </div>
       );
     }

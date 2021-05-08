@@ -55,7 +55,7 @@ def Questions(request):
                 total_quest = Game.objects.aggregate(
                         Sum('max_questions'))['max_questions__sum']
 
-                avg_score = round((total_score/total_quest)*100, 1) \
+                avg_score = round((total_score/total_quest), 2) \
                             if total_quest > 0 else 0
                 questions_cln[0]['avg_score'] = avg_score
 
