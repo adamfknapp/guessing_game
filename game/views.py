@@ -7,7 +7,7 @@ from . import services
 from game.models import Game
 from django.db.models import Sum
 
-from random import shuffle
+
 import json
 import pybase64
 

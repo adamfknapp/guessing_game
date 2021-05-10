@@ -3,7 +3,7 @@
 class Mybutton extends React.Component {
 
   render() {
-
+  //Render the choice button
     const button_cls = "my-3 mx-10 py-2 px-4 bg-white text-purple-800 \
                         font-semibold border border-purple-800 rounded \
                         hover:bg-purple-600 hover:text-white \
@@ -17,6 +17,7 @@ class Mybutton extends React.Component {
   }
 
   handleClick(){
+  //Update the state based on if the asnwer is correct.
     if (this.props.text === this.props.correct_answer){
       this.props.increment()
     } else {
@@ -30,6 +31,7 @@ class Mybutton extends React.Component {
 
 // TODO Move to new file
 class Score extends React.Component {
+//Display the score and game progress to user
   render() {
     return (
       <div>
@@ -67,6 +69,7 @@ class App extends React.Component {
 
 
   increment = () => {
+  // Update the state after a question is answered correctly
     this.setState({
       score: this.state.score + 1,
       quesitons_answered: this.state.quesitons_answered + 1
@@ -75,6 +78,7 @@ class App extends React.Component {
 
 
   decrement = () => {
+  // Update the state after a question is answered incorrectly
     this.setState({
       quesitons_answered: this.state.quesitons_answered + 1
     });
@@ -82,6 +86,7 @@ class App extends React.Component {
 
 
   handle_game_over = () => {
+  //Log the results of the game
     fetch('/questions', {
        method: 'POST',
        headers: {'Content-Type':'application/json'},
@@ -93,6 +98,7 @@ class App extends React.Component {
   }
 
   handlePlayAgain = () => {
+  // Reset the state to play again
     this.setState({
       quesitons_answered: 0,
       score: 0
@@ -100,6 +106,7 @@ class App extends React.Component {
   }
 
   get_question = () => {
+  //Get a new question
     fetch(`/questions`)
         .then(response => response.json())
         .then((data)=>{
@@ -145,6 +152,7 @@ class App extends React.Component {
                           duration-200 transform hover:-translate-y-1 \
                           active:translate-y-0"
       return (
+        //Display the results of the game
         <div class={`${ score_is_bel_avg ? negative_score_class : positive_score_class}`}>
           <div class="flex flex-col h-screen justify-center items-center">
             <h2 class=" text-gray-50 text-6xl font-semibold text-center p-20">  
